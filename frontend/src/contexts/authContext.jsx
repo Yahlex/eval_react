@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useReducer } from 'react'
-import { loginApi } from '../services/api'
+import { loginApi, registerApi } from '../services/api'
 import { toast } from 'react-toastify'
 
 const AuthContext = createContext()
@@ -83,8 +83,30 @@ const authFactory = (dispatch) => ({
   },
   logout: () => {
     dispatch({ type: actionTypes.LOGOUT })
-  }
+  },
 
+  register: async (userData) => {
+    dispatch({ type: actionTypes.LOADING })
+    try {
+      const result = await registerApi(userData)
+      dispatch({
+        type: actionTypes.REGISTER,
+        data: {
+          user: result.user,
+          jwt: result.jwt
+        }
+      })
+    } catch (error) {
+      console.error(error)
+      toast.error('Identfiant ou mot de passe incorrect')
+      dispatch({
+        type: actionTypes.ERROR,
+        data: {
+          error: 'Identifiant ou mot de passe incorrect'
+        }
+      })
+    }
+  },
 })
 
 const AuthProvider = ({ children }) => {

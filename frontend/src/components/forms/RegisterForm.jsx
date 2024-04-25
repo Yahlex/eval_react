@@ -1,28 +1,39 @@
 import { useState } from 'react'
-
 import { validateRegisterForm } from '../../services/formAuthValidation'
 import { toast } from 'react-toastify'
 import { Button, Input } from '@nextui-org/react'
+import { useAuth } from '../../contexts/authContext'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 function RegisterForm () {
   // Version simple
   // const [firstName, setFirstName] = useState('')
   // const [lastName, setLastName] = useState('')
   const [errors, setErrors] = useState({
-    firstName: null,
-    lastName: null,
     username: null,
     email: null,
     password: null
   })
 
   const [formData, setFormData] = useState({
-    firstName: 'Marius',
-    lastName: 'Sergent',
     username: 'test56',
     email: 'tooto@toto.fr',
     password: '123456'
   })
+
+  const { register } = useAuth()
+
+  const navigate = useNavigate()
+
+  const { state: { user, jwt, error, loading }, login } = useAuth()
+
+  useEffect(() => {
+    if (user && jwt) {
+      navigate('/dashboard')
+    }
+  }, [user, jwt])
+
 
   const handleChange = (event) => {
     setFormData({
@@ -37,30 +48,16 @@ function RegisterForm () {
     if (_errors) {
       setErrors(_errors)
     } else {
-      toast.info(`Formulaire soumis : ${formData.firstName} ${formData.lastName}`)
+      toast.info(`Formulaire soumis : ${formData.username} ${formData.email}`)
     }
+    register(formData)
   }
 
   console.log(formData)
 
   return (
     <form className='form-container' onSubmit={handleSubmit}>
-      <Input
-        name='lastName'
-        label='Nom : '
-        placeholder='Entrez votre nom...'
-        value={formData.lastName}
-        onChange={handleChange}
-        error={errors.lastName}
-      />
-      <Input
-        name='firstName'
-        label='Prénom : '
-        placeholder='Entrez votre prénom...'
-        value={formData.firstName}
-        onChange={handleChange}
-        error={errors.firstName}
-      />
+      <h2>Merci de vous inscrire avec votre adresse mail : </h2>
       <Input
         name='username'
         label="Nom d'utilisateur : "
@@ -85,6 +82,7 @@ function RegisterForm () {
       <Button
         type='submit'
         color='primary'
+        
       >
         S'enregistrer
       </Button>

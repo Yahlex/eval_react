@@ -79,11 +79,11 @@ function Header () {
           : (
             <NavbarContent justify='end'>
               <NavbarItem className='hidden lg:flex'>
-                <Link href='#'>Login</Link>
+                <Link href='/register'>Sign up</Link>
               </NavbarItem>
               <NavbarItem>
                 <Button as={Link} color='primary' href='/authentication' variant='flat'>
-                  Sign Up
+                  Login
                 </Button>
               </NavbarItem>
             </NavbarContent>

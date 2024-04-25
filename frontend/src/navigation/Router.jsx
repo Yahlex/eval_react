@@ -14,6 +14,7 @@ import Artisan from '../pages/Artisan'
 import Auth from '../pages/Auth'
 import Dashboard from '../pages/protected/Dashboard'
 import PrivateRoute from './PrivateRouteMiddleware'
+import Register from '../pages/Register'
 
 function Router () {
   return (
@@ -28,6 +29,7 @@ function Router () {
         <Route path='services' element={<Services />} />
         <Route path='contact' element={<Contact />} />
         <Route path='authentication' element={<Auth />} />
+        <Route path='register' element={<Register />} />
         <Route path='dashboard' element={<PrivateRoute />}>
           <Route index element={<Dashboard />} />
         </Route>

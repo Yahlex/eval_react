@@ -5,8 +5,8 @@ import { Button, Input } from '@nextui-org/react'
 
 function LoginForm () {
   const [formData, setFormData] = useState({
-    identifier: 'jeanmich@mail.com',
-    password: 'jeanmich'
+    identifier: 'toto@gmail.com',
+    password: 'toto22'
   })
 
   const navigate = useNavigate()
