@@ -57,6 +57,7 @@ const authReducer = (prevState, action) => {
   }
 }
 
+  // *
 const authFactory = (dispatch) => ({
   // credentials = { identifier, password }
   login: async (credentials) => {

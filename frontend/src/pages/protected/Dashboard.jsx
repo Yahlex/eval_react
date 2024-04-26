@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/authContext'
 import { Button } from '@nextui-org/react'
+import UserProfile from '../../components/user/UserProfile'
 
 function Dashboard () {
   const navigate = useNavigate()
@@ -15,6 +16,7 @@ function Dashboard () {
   return (
     <>
       <h2>DASHBOARD</h2>
+      <UserProfile />
       <Button onClick={handleLogout}>
         Se déconnecter
       </Button>

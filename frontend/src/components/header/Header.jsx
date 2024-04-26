@@ -65,10 +65,14 @@ function Header () {
                   />
                 </DropdownTrigger>
                 <DropdownMenu aria-label='Profile Actions' variant='flat'>
+                  
                   <DropdownItem key='profile' className='h-14 gap-2'>
                     <p className='font-semibold'>Signed in as</p>
+                    <Link href='/dashboard' key='profile' >
                     <p className='font-semibold'>{user.email}</p>
+                    </Link>
                   </DropdownItem>
+                  
                   <DropdownItem key='logout' color='danger' onPress={logout}>
                     Log Out
                   </DropdownItem>
