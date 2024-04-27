@@ -1,6 +1,8 @@
 import React from 'react';
 import { useAuth } from '../../contexts/authContext';
 
+
+
 function UserProfile() {
   const { state: { user } } = useAuth();
 
@@ -11,6 +13,8 @@ function UserProfile() {
       <p>Email: {user.email}</p>
     </div>
   );
+
+  
 }
 
 export default UserProfile;

@@ -383,6 +383,11 @@ export interface ApiArtisanArtisan extends Schema.CollectionType {
       'oneToMany',
       'api::product.product'
     >;
+    user: Attribute.Relation<
+      'api::artisan.artisan',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -799,7 +804,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -827,6 +831,12 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'plugin::users-permissions.user',
       'manyToOne',
       'plugin::users-permissions.role'
+    >;
+    isArtisan: Attribute.Boolean & Attribute.DefaultTo<false>;
+    artisan: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToOne',
+      'api::artisan.artisan'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;

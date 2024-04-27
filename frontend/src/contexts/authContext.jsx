@@ -85,7 +85,7 @@ const authFactory = (dispatch) => ({
   logout: () => {
     dispatch({ type: actionTypes.LOGOUT })
   },
-
+  //* Ajout de register
   register: async (userData) => {
     dispatch({ type: actionTypes.LOADING })
     try {

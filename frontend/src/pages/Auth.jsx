@@ -16,6 +16,10 @@ function Auth () {
     }
   }, [])
 
+  const handleArtisanRegistration = () => {
+    navigate('/inscription-artisan');
+  };
+
   return (
     <>
       {
@@ -25,6 +29,10 @@ function Auth () {
       }
       <a onClick={() => setIsRegister(!isRegister)}>
         {isRegister ? "J'ai déjà un compte" : "Je n'ai pas de compte"}
+      </a>
+      <br />
+      <a onClick={handleArtisanRegistration}>
+        Je veux m'inscrire en tant qu'artisan
       </a>
     </>
   )
