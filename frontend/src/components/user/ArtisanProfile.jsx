@@ -1,39 +1,47 @@
-import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/react'
-import PropTypes from 'prop-types'
-import { useNavigate } from 'react-router-dom'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useFetchAuth } from '../../hooks/Api';
 
-function ArtisanProfile ({ artisan }) {
-  const navigate = useNavigate()
+function ArtisanProfile({ attributes }) {
+  // Utilisez useFetchAuth ou tout autre moyen pour récupérer les données de l'artisan
+  const { response: artisanData, isLoading, error } = useFetchAuth('/users/me?populate=artisan.profilePicture')
 
-  // Vérifie si l'artisan a une image de profil
-  const imageUrl = artisan.profilePicture?.url 
-    ? `${process.env.REACT_APP_BASE_URL}${artisan.profilePicture.url}`
-    : null
-
-  // Fonction pour naviguer vers le profil complet de l'artisan
-  const handleShopLink = () => {
-    navigate(`/artisans/${artisan.slug}`)
+  // Vérifiez s'il y a une erreur ou si les données sont en cours de chargement
+  if (isLoading) {
+    return <div>Chargement...</div>;
   }
 
+  if (error) {
+    return <div>Une erreur s'est produite: {error.message}</div>;
+  }
+
+  // Assurez-vous que artisanData est disponible avant de l'utiliser
+  if (!artisanData) {
+    return <div>Aucune donnée disponible pour l'artisan</div>;
+  }
+
+  // Affichez les données de l'artisan dans une card Tailwind CSS
   return (
-    <Card className='flex flex-col items-center w-1/3'>
-      <CardHeader className='flex flex-col items-center font-semibold'>
-        Votre profil d'artisan :
-        <h1>{artisan.name}</h1>
-      </CardHeader>
-      <CardBody className='w-80'>
-        {imageUrl && <img src={imageUrl} alt="Profile" className='artisan-pp rounded-md' />}
-      </CardBody>
-      <CardFooter className='flex flex-col text-center gap-4 p-8'>
-        <p>{artisan.description}</p>
-        <a onClick={handleShopLink}>Voir mon shop</a>
-      </CardFooter>
-    </Card>
-  )
+    <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+      <div className="md:flex">
+        <div className="md:flex-shrink-0">
+          <img className="h-48 w-full object-cover md:w-48" src={attributes.profilePicture.url} alt="Profile" />
+        </div>
+        <div className="p-8">
+          <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Artisan</div>
+          <p className="block mt-1 text-lg leading-tight font-medium text-black">{attributes.name}</p>
+          <p className="mt-2 text-gray-500">{attributes.email}</p>
+          {/* Ajoutez d'autres données de l'artisan ici si nécessaire */}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 ArtisanProfile.propTypes = {
-  artisan: PropTypes.object.isRequired
-}
+    attributes: PropTypes.object
+  }
+  
 
-export default ArtisanProfile
+export default ArtisanProfile;
+
