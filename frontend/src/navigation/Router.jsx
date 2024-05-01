@@ -15,6 +15,7 @@ import Auth from '../pages/Auth'
 import Dashboard from '../pages/protected/Dashboard'
 import PrivateRoute from './PrivateRouteMiddleware'
 import Register from '../pages/Register'
+import Profile from '../pages/protected/Profile'
 
 function Router () {
   return (
@@ -32,6 +33,9 @@ function Router () {
         <Route path='register' element={<Register />} />
         <Route path='dashboard' element={<PrivateRoute />}>
           <Route index element={<Dashboard />} />
+        </Route>
+        <Route path='profile' element={<PrivateRoute />}>
+          <Route index element={<Profile />} />
         </Route>
       </Routes>
     </BrowserRouter>

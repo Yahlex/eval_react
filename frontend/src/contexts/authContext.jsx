@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useReducer } from 'react'
-import { loginApi, registerApi } from '../services/api'
+import { loginApi, registerApi, updateUserApi} from '../services/api'
 import { toast } from 'react-toastify'
 
 const AuthContext = createContext()
@@ -10,7 +10,8 @@ const actionTypes = {
   LOGOUT: 'LOGOUT', // Déconnecté
   LOADING: 'LOADING', // Chargement
   ERROR: 'ERROR', // Erreur
-  RESET: 'RESET' // Réinitialisation de l'état
+  RESET: 'RESET', // Réinitialisation de l'état
+  UPDATE_USER: 'UPDATE_USER' // Mise à jour de l'utilisateur
 }
 
 const initialState = {
@@ -52,6 +53,13 @@ const authReducer = (prevState, action) => {
     case actionTypes.RESET:
     case actionTypes.LOGOUT:
       return initialState
+    case actionTypes.UPDATE_USER: // Gérer la mise à jour de l'utilisateur
+      return {
+        ...prevState,
+        user: action.data.user,
+        loading: false,
+        error: null
+      }
     default:
       throw new Error(`Unhandled action type : ${action.type}`)
   }
@@ -108,7 +116,33 @@ const authFactory = (dispatch) => ({
       })
     }
   },
-})
+
+  //* Ajout de updateUser
+  updateUser: async (userData) => {
+    dispatch({ type: actionTypes.LOADING });
+    try {
+      const result = await updateUserApi(userData); // Appeler updateUserApi
+      dispatch({
+        type: actionTypes.UPDATE_USER,
+        data: {
+          user: result.user,
+          jwt: result.jwt,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+      toast.error("Erreur lors de la mise à jour de l'utilisateur");
+      dispatch({
+        type: actionTypes.ERROR,
+        data: {
+          error: "Erreur lors de la mise à jour de l'utilisateur",
+        },
+      });
+    }
+  },
+
+});
+
 
 const AuthProvider = ({ children }) => {
   const savedState = window.localStorage.getItem('AUTH')
