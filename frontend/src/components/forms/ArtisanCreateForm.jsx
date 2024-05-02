@@ -1,105 +1,97 @@
 import React, { useState } from 'react';
-import { Button, Input } from '@nextui-org/react';
-import { toast } from 'react-toastify';
-import { createArtisanApi } from '../../services/api';
+import { Button, Input, Textarea } from '@nextui-org/react';
 import { useAuth } from '../../contexts/authContext';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
-const ArtisanCreateForm = () => {
-  const { state: { user } } = useAuth(); // Récupérer l'utilisateur connecté depuis le contexte d'authentification
+function ArtisanCreateForm() {
+  const { state: { user, jwt } } = useAuth();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    profilePicture: '',
-    slug: '', // Supprimé le champ slug de l'état local
-    products: [], // Initialiser products à une valeur vide
-    user: user ? user.id : ''
+    profilePicture: null
   });
 
   const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value
-    });
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const handleImageUpload = async (event) => {
-    const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append('files', file);
+  const handleFileChange = (event) => {
+    setFormData({ ...formData, profilePicture: event.target.files[0] });
+  };
 
+  const handleSubmit = async () => {
+    const formDataWithImage = new FormData();
+    if (formData.profilePicture) {
+      formDataWithImage.append('files.profilePicture', formData.profilePicture); // Assurez-vous que le nom correspond
+    }
+    formDataWithImage.append('data', JSON.stringify({
+      name: formData.name,
+      description: formData.description,
+      user: user.id
+    }));
+  
     try {
-      // Envoyer l'image à Strapi
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/upload`, {
-        method: 'POST',
-        body: formData
+      const response = await axios({
+        method: 'post',
+        url: `${process.env.REACT_APP_API_URL}/artisans`,
+        data: formDataWithImage,
+        headers: {
+          'Authorization': `Bearer ${jwt}`,
+          'Content-Type': 'multipart/form-data'
+        }
       });
-      const data = await response.json();
-      if (data[0]?.url) {
-        setFormData({
-          ...formData,
-          profilePicture: data[0].url
-        });
+  
+      if (response.status === 200) {
+        toast.success('Artisan créé avec succès');
+        // navigate('/dashboard'); // Redirection vers le dashboard après la création réussie
+        window.location.reload(); // Recharger la page pour voir les changements
       } else {
-        toast.error('Erreur lors du téléchargement de l\'image');
+        toast.error(`Failed to create artisan: ${response.statusText}`);
       }
     } catch (error) {
-      console.error(error);
-      toast.error('Erreur lors du téléchargement de l\'image');
-    }
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      // Générer le slug à partir du nom de l'artisan
-      const slug = formData.name.toLowerCase().replace(/\s+/g, '-');
-      await createArtisanApi({ ...formData, slug });
-      toast.success('Artisan créé avec succès');
-      // Réinitialiser le formulaire après la création réussie
-      setFormData({
-        name: '',
-        description: '',
-        profilePicture: '',
-        products: [],
-        user: user ? user.id : ''
-      });
-    } catch (error) {
-      console.error(error);
-      toast.error('Erreur lors de la création de l\'artisan');
+      console.error('Error creating artisan:', error);
+      toast.error('Error creating artisan.');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Créer un nouvel artisan :</h2>
+    <div className='max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md'>
       <Input
-        name='name'
-        label='Nom de l\artisan : '
-        placeholder='Entrez le nom de l\artisan...'
+        clearable
+        bordered
+        label="Nom de l'artisan"
+        name="name"
         value={formData.name}
         onChange={handleChange}
+        className="mb-4"
       />
-      <Input
-        name='description'
-        label='Description de l\artisan : '
-        placeholder='Entrez la description de l\artisan...'
+      <Textarea
+        bordered
+        label="Description"
+        name="description"
         value={formData.description}
         onChange={handleChange}
+        className="mb-4"
       />
-      <Input
-        name='profilePicture'
-        label='Image de profil de l\artisan : '
-        type='file' // Utiliser le type 'file' pour permettre le téléchargement de l'image
-        onChange={handleImageUpload}
+      <input
+        type="file"
+        onChange={handleFileChange}
+        className="file:mr-4 file:py-2 file:px-4
+                  file:rounded-full file:border-0
+                  file:text-sm file:font-semibold
+                  file:bg-blue-50 file:text-blue-700
+                  hover:file:bg-blue-100
+                  mb-4 w-full cursor-pointer"
       />
-      {/* Supprimer le champ slug de l'interface utilisateur */}
-      {/* Supprimer le champ products de l'interface utilisateur */}
-      <Button type='submit' color='primary'>
+      <Button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
         Créer l'artisan
       </Button>
-    </form>
+    </div>
   );
-};
+}
 
 export default ArtisanCreateForm;
