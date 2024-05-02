@@ -3,9 +3,10 @@ import { useState } from 'react';
 import { useAuth } from '../../contexts/authContext';
 import { Button, Input } from '@nextui-org/react';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 function Profile() {
-  const { state: { user }, updateUser, logout } = useAuth();
+  const { state: { user, jwt }, updateUser, logout } = useAuth();
 
   // State pour stocker les données du formulaire
   const [formData, setFormData] = useState({
@@ -38,6 +39,27 @@ function Profile() {
       toast.error('Erreur lors de la mise à jour des informations');
     }
   };
+      // Supprime le compte utilisateur
+  const handleSuppress = async () => {
+    async function suppressUser () {
+      const response = await axios.delete(`${process.env.REACT_APP_API_URL}/users/${user.id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Bearer ${jwt}`
+        }
+      })
+      return response
+    }
+    const response = await suppressUser()
+    if (response.status === 200) {
+      toast.success('Votre compte a été supprimé avec succès !')
+      logout()
+    } else {
+      console.log(response)
+      toast.error('Erreur lors de la suppression de votre compte')
+    }
+  }
 
   return (
     <div>
@@ -64,6 +86,9 @@ function Profile() {
           onChange={handleChange}
         />
         <Button type='submit'>Enregistrer les modifications</Button>
+        <a onClick={() => handleSuppress()} className='text-red-400'>
+        Supprimer mon compte
+      </a>
       </form>
     </div>
   );

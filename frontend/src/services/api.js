@@ -30,6 +30,8 @@ const registerApi = async (userData) => {
     throw new Error(error.response.data.message[0].messages[0].message);
   }
 };
+
+  // fonction pour mettre à jour un utilisateur
 const updateUserApi = async (userData) => {
   try {
     console.log(userData);
@@ -39,13 +41,14 @@ const updateUserApi = async (userData) => {
     throw new Error(error.response.data.message || "Erreur lors de la mise à jour de l'utilisateur");
   }
 };
-
+  // fonction pour créer un artisan
 const createArtisanApi = async (formData, userId) => {
   try {
     const data = {
       data: {
         ...formData,
-        user: userId
+        user: { id: userId},
+        products : []
       }
     };
     const response = await axiosInstance.post('/artisans', data);

@@ -6,6 +6,7 @@ import UserProfile from '../../components/user/UserProfile';
 import { useFetchAuth } from '../../hooks/Api';
 import ArtisanProfile from '../../components/user/ArtisanProfile';
 import ArtisanCreateForm from '../../components/forms/ArtisanCreateForm';
+import ProductsListDashboard from '../../components/products/ProductsListDashboard';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -28,6 +29,10 @@ function Dashboard() {
     setShowArtisanCreateForm(true);
   };
 
+  const handleCreateNewProduct = () => {
+    navigate('/create-product'); 
+  };
+
   return (
     <>
       <h2>DASHBOARD</h2>
@@ -39,6 +44,8 @@ function Dashboard() {
           Créer ma page Artisan
         </Button>
       )}
+      {isArtisan && <ProductsListDashboard artisanId={response.artisan.id} />}
+      <Button color="primary" onClick={handleCreateNewProduct}>Créer un nouveau produit</Button>
       <Button onClick={handleLogout}>
         Se déconnecter
       </Button>

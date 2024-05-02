@@ -16,6 +16,8 @@ import Dashboard from '../pages/protected/Dashboard'
 import PrivateRoute from './PrivateRouteMiddleware'
 import Register from '../pages/Register'
 import Profile from '../pages/protected/Profile'
+import CreateNewProduct from '../components/products/CreateNewProduct'
+import UpdateProduct from '../components/products/UpdateProduct'
 
 function Router () {
   return (
@@ -31,6 +33,8 @@ function Router () {
         <Route path='contact' element={<Contact />} />
         <Route path='authentication' element={<Auth />} />
         <Route path='register' element={<Register />} />
+        <Route path="create-product" element={<CreateNewProduct />} />
+        <Route path="update-product/:productId" element={<UpdateProduct />} />
         <Route path='dashboard' element={<PrivateRoute />}>
           <Route index element={<Dashboard />} />
         </Route>

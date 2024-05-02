@@ -17,16 +17,16 @@ function RegisterForm () {
   })
 
   const [formData, setFormData] = useState({
-    username: 'test56',
+    username: 'Testoxi',
     email: 'tooto@toto.fr',
-    password: '123456'
+    password: 'toto44'
   })
 
   const { register } = useAuth()
 
   const navigate = useNavigate()
 
-  const { state: { user, jwt, error, loading }, login } = useAuth()
+  const { state: { user, jwt }} = useAuth()
 
   useEffect(() => {
     if (user && jwt) {
