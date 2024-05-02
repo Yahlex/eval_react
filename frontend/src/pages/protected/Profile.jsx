@@ -52,6 +52,7 @@ function Profile() {
       return response
     }
     const response = await suppressUser()
+
     if (response.status === 200) {
       toast.success('Votre compte a été supprimé avec succès !')
       logout()

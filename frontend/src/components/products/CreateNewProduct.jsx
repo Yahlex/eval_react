@@ -110,7 +110,7 @@ function CreateNewProduct() {
   <Input
     clearable
     bordered
-    label="Name"
+    label="Nom"
     name="name"
     value={formData.name}
     onChange={handleChange}
@@ -119,7 +119,7 @@ function CreateNewProduct() {
   <Input
     clearable
     bordered
-    label="Price"
+    label="Prix"
     type="number"
     name="price"
     value={formData.price}
@@ -147,10 +147,10 @@ function CreateNewProduct() {
   />
   <div className="flex justify-between items-center">
     <Button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-      Create Product
+      Créer nouveau produit
     </Button>
     <Button auto flat color="error" onClick={handleCancel} className="ml-4">
-      Cancel
+      Annuler
     </Button>
   </div>
 </div>

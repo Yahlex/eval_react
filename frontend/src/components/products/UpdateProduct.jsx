@@ -101,7 +101,7 @@ function UpdateProduct() {
         <Input
           clearable
           bordered
-          label="Name"
+          label="Nom du produit"
           name="name"
           value={productData.name}
           onChange={handleChange}
@@ -110,7 +110,7 @@ function UpdateProduct() {
         <Input
           clearable
           bordered
-          label="Price"
+          label="Prix"
           type="number"
           name="price"
           value={productData.price}
@@ -135,7 +135,7 @@ function UpdateProduct() {
       
         <input type="file" multiple onChange={handleFileChange} className="my-3" />
         <Button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Update Product
+          Modifier le produit
         </Button>
       </div>
       
