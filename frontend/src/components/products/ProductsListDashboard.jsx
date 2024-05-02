@@ -36,37 +36,53 @@ export default function ProductsListDashboard({ artisanId }) {
   }
 
   return (
-    <Table className='my-7' aria-label='Example static collection table'>
-      <TableHeader>
-        <TableColumn>Image</TableColumn>
-        <TableColumn className='text-center'>Nom</TableColumn>
-        <TableColumn className='text-center'>Prix</TableColumn>
-        <TableColumn className='text-center'>Actions</TableColumn>
-      </TableHeader>
-      <TableBody>
-        {products.map((product) => (
-          <TableRow key={product.id}>
-            <TableCell className='text-center'>
-              {product.attributes?.images?.data?.[0] ? (
-                <img className='h-[100px] rounded-xl' src={`${process.env.REACT_APP_BASE_URL}${product.attributes.images.data[0].attributes.url}`} alt="Product" />
-              ) : (
-                <span>No image available</span>
-              )}
-            </TableCell>
-            <TableCell>{product.attributes.name}</TableCell>
-            <TableCell>{product.attributes.price} €</TableCell>
-            <TableCell>
-            <Button className='mr-3' color='primary' onClick={() => navigate(`/update-product/${product.id}`)} variant='flat'>
-                Mettre à jour
-            </Button>
+<div className="overflow-x-auto relative shadow-md sm:rounded-lg">
+    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" className="py-3 px-6">
+                    Image
+                </th>
+                <th scope="col" className="py-3 px-6 text-center">
+                    Nom
+                </th>
+                <th scope="col" className="py-3 px-6 text-center">
+                    Prix
+                </th>
+                <th scope="col" className="py-3 px-6 text-center">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {products.map((product) => (
+                <tr key={product.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td className="py-4 px-6">
+                        {product.attributes?.images?.data?.[0] ? (
+                            <img className="h-[100px] rounded-xl" src={`${process.env.REACT_APP_BASE_URL}${product.attributes.images.data[0].attributes.url}`} alt="Product" />
+                        ) : (
+                            <span>No image available</span>
+                        )}
+                    </td>
+                    <td className="py-4 px-6 text-center">{product.attributes.name}</td>
+                    <td className="py-4 px-6 text-center">{product.attributes.price} €</td>
+                    <td className="py-4 px-6 text-center">
+                        <button 
+                            className="text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2" 
+                            onClick={() => navigate(`/update-product/${product.id}`)}>
+                            Modifier
+                        </button>
+                        <button 
+                            className="text-white bg-red-500 hover:bg-red-700 font-medium rounded-lg text-sm px-4 py-2 text-center" 
+                            onClick={(event) => handleDelete(product.id, event)}>
+                            Supprimer
+                        </button>
+                    </td>
+                </tr>
+            ))}
+        </tbody>
+    </table>
+</div>
 
-              <Button color='danger' onPress={(event) => handleDelete(product.id, event)}>
-                Supprimer
-              </Button>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
   );
 }

@@ -106,40 +106,55 @@ function CreateNewProduct() {
 
   return (
     <>
-      <div className='flex flex-col items-center justify-center'>
-        <Input
-          clearable
-          bordered
-          label="Name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <Input
-          clearable
-          bordered
-          label="Price"
-          type="number"
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
-        />
-        <Textarea
-          bordered
-          label="Description"
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-        />
-        <input
-          type="file"
-          multiple
-          onChange={handleFileChange}
-          className="my-3"
-        />
-        <Button onClick={handleSubmit}>Create Product</Button>
-        <Button auto flat color="error" onClick={handleCancel}>Cancel</Button>
-      </div>
+<div className='max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md'>
+  <Input
+    clearable
+    bordered
+    label="Name"
+    name="name"
+    value={formData.name}
+    onChange={handleChange}
+    className="mb-4"
+  />
+  <Input
+    clearable
+    bordered
+    label="Price"
+    type="number"
+    name="price"
+    value={formData.price}
+    onChange={handleChange}
+    className="mb-4"
+  />
+  <Textarea
+    bordered
+    label="Description"
+    name="description"
+    value={formData.description}
+    onChange={handleChange}
+    className="mb-4"
+  />
+  <input
+    type="file"
+    multiple
+    onChange={handleFileChange}
+    className="file:mr-4 file:py-2 file:px-4
+              file:rounded-full file:border-0
+              file:text-sm file:font-semibold
+              file:bg-blue-50 file:text-blue-700
+              hover:file:bg-blue-100
+              mb-4 w-full cursor-pointer"
+  />
+  <div className="flex justify-between items-center">
+    <Button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+      Create Product
+    </Button>
+    <Button auto flat color="error" onClick={handleCancel} className="ml-4">
+      Cancel
+    </Button>
+  </div>
+</div>
+
     </>
   );
 }

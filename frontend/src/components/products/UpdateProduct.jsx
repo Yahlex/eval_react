@@ -97,16 +97,48 @@ function UpdateProduct() {
     };
 
     return (
-        <div>
-            <Input clearable bordered label="Name" name="name" value={productData.name} onChange={handleChange} />
-            <Input clearable bordered label="Price" type="number" name="price" value={productData.price} onChange={handleChange} />
-            <Textarea bordered label="Description" name="description" value={productData.description} onChange={handleChange} />
-            {productData.images.map((image, index) => (
-                <img key={index} src={`${process.env.REACT_APP_BASE_URL}${image.url}`} alt="Product" style={{ width: '100px', height: '100px' }} />
-            ))}
-            <input type="file" multiple onChange={handleFileChange} className="my-3" />
-            <Button onClick={handleSubmit}>Update Product</Button>
+        <div className="max-w-lg mx-auto p-4 shadow-lg rounded-lg">
+        <Input
+          clearable
+          bordered
+          label="Name"
+          name="name"
+          value={productData.name}
+          onChange={handleChange}
+          className="mb-4"
+        />
+        <Input
+          clearable
+          bordered
+          label="Price"
+          type="number"
+          name="price"
+          value={productData.price}
+          onChange={handleChange}
+          className="mb-4"
+        />
+        <Textarea
+          bordered
+          label="Description"
+          name="description"
+          value={productData.description}
+          onChange={handleChange}
+          className="mb-4"
+        />
+      
+        {/* Displaying existing images */}
+        <div className="flex flex-wrap gap-4 mb-4">
+          {productData.images.map((image, index) => (
+            <img key={index} src={`${process.env.REACT_APP_BASE_URL}${image.url}`} alt="Product" className="h-24 w-24 object-cover rounded-lg" />
+          ))}
         </div>
+      
+        <input type="file" multiple onChange={handleFileChange} className="my-3" />
+        <Button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Update Product
+        </Button>
+      </div>
+      
     );
 }
 

@@ -62,35 +62,43 @@ function Profile() {
   }
 
   return (
-    <div>
-      <h2>Profil de {user.username}</h2>
-      <form onSubmit={handleSubmit}>
-        <Input
-          name='username'
-          label='Nom d utilisateur'
-          value={formData.username}
-          onChange={handleChange}
-        />
-        <Input
-          name='email'
-          label='Adresse e-mail'
-          type='email'
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <Input
-          name='password'
-          label='Nouveau mot de passe'
-          type='password'
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <Button type='submit'>Enregistrer les modifications</Button>
-        <a onClick={() => handleSuppress()} className='text-red-400'>
+<div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+  <h2 className="text-2xl font-semibold text-gray-800 mb-6">Profil de {user.username}</h2>
+  <form onSubmit={handleSubmit} className="space-y-4">
+    <Input
+      name='username'
+      label='Nom d utilisateur'
+      value={formData.username}
+      onChange={handleChange}
+      className="w-full"
+    />
+    <Input
+      name='email'
+      label='Adresse e-mail'
+      type='email'
+      value={formData.email}
+      onChange={handleChange}
+      className="w-full"
+    />
+    <Input
+      name='password'
+      label='Nouveau mot de passe'
+      type='password'
+      value={formData.password}
+      onChange={handleChange}
+      className="w-full"
+    />
+    <div className="flex justify-between items-center">
+      <Button type='submit' className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+        Enregistrer les modifications
+      </Button>
+      <a onClick={handleSuppress} className="text-red-500 hover:text-red-600 cursor-pointer">
         Supprimer mon compte
       </a>
-      </form>
     </div>
+  </form>
+</div>
+
   );
 }
 
