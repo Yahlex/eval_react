@@ -17,23 +17,37 @@ function Auth () {
   }, [])
 
   const handleArtisanRegistration = () => {
-    navigate('/inscription-artisan');
-  };
+    navigate('/inscription-artisan')
+  }
 
   return (
     <>
-      {
-        isRegister
-          ? <RegisterForm />
-          : <LoginForm />
-      }
-      <a onClick={() => setIsRegister(!isRegister)}>
-        {isRegister ? "J'ai déjà un compte" : "Je n'ai pas de compte"}
-      </a>
-      <br />
-      <a onClick={handleArtisanRegistration}>
-        Je veux m'inscrire en tant qu'artisan
-      </a>
+      <div className='container mx-auto px-4 py-8'>
+        <div className='max-w-md mx-auto bg-white p-6 rounded-lg shadow-md'>
+          {
+      isRegister
+        ? <RegisterForm />
+        : <LoginForm />
+    }
+          <div className='text-center mt-4'>
+            <button
+              className='text-blue-500 hover:text-blue-700 underline'
+              onClick={() => setIsRegister(!isRegister)}
+            >
+              {isRegister ? "J'ai déjà un compte" : "Je n'ai pas de compte"}
+            </button>
+          </div>
+          <div className='text-center mt-2'>
+            <button
+              className='text-green-500 hover:text-green-700 underline'
+              onClick={handleArtisanRegistration}
+            >
+              Je veux m'inscrire en tant qu'artisan
+            </button>
+          </div>
+        </div>
+      </div>
+
     </>
   )
 }

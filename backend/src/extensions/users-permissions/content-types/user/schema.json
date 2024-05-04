@@ -65,10 +65,6 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "isArtisan": {
-      "type": "boolean",
-      "default": false
-    },
     "artisan": {
       "type": "relation",
       "relation": "oneToOne",

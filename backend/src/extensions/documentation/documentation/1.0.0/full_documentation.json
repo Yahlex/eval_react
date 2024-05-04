@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-05-02T15:56:27.880Z"
+    "x-generation-date": "2024-05-03T08:29:23.748Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -1375,9 +1375,6 @@
                                                       }
                                                     }
                                                   }
-                                                },
-                                                "isArtisan": {
-                                                  "type": "boolean"
                                                 },
                                                 "artisan": {
                                                   "type": "object",
@@ -2969,9 +2966,6 @@
                                         }
                                       }
                                     }
-                                  },
-                                  "isArtisan": {
-                                    "type": "boolean"
                                   },
                                   "artisan": {
                                     "type": "object",

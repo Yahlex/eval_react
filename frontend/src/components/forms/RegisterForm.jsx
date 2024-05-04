@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { validateRegisterForm } from '../../services/formAuthValidation'
 import { toast } from 'react-toastify'
 import { Button, Input } from '@nextui-org/react'
 import { useAuth } from '../../contexts/authContext'
 import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
 
 function RegisterForm () {
   // Version simple
@@ -26,14 +25,13 @@ function RegisterForm () {
 
   const navigate = useNavigate()
 
-  const { state: { user, jwt }} = useAuth()
+  const { state: { user, jwt } } = useAuth()
 
   useEffect(() => {
     if (user && jwt) {
       navigate('/dashboard')
     }
   }, [user, jwt])
-
 
   const handleChange = (event) => {
     setFormData({
@@ -56,37 +54,55 @@ function RegisterForm () {
   console.log(formData)
 
   return (
-    <form className='form-container' onSubmit={handleSubmit}>
-      <h2>Merci de vous inscrire avec votre adresse mail : </h2>
-      <Input
-        name='username'
-        label="Nom d'utilisateur : "
-        placeholder="Entrez votre nom d'utilisateur..."
-        value={formData.username}
-        onChange={handleChange}
-      />
-      <Input
-        name='email'
-        label='Email : '
-        placeholder='Entrez votre adresse email...'
-        value={formData.email}
-        onChange={handleChange}
-      />
-      <Input
-        name='password'
-        label='Mot de passe : '
-        placeholder='Entrez un mot de passe...'
-        value={formData.password}
-        onChange={handleChange}
-      />
-      <Button
-        type='submit'
-        color='primary'
-        
-      >
-        S'enregistrer
-      </Button>
-    </form>
+    <div className='container mx-auto px-4 py-8'>
+      <div className='max-w-md mx-auto bg-white p-6 rounded-lg shadow-md'>
+        <h2 className='text-lg font-semibold text-gray-800 mb-4'>Merci de vous inscrire avec votre adresse mail :</h2>
+        <form onSubmit={handleSubmit}>
+          <div className='mb-4'>
+            <Input
+              clearable
+              bordered
+              label="Nom d'utilisateur :"
+              placeholder="Entrez votre nom d'utilisateur..."
+              name='username'
+              value={formData.username}
+              onChange={handleChange}
+              className='w-full'
+            />
+          </div>
+          <div className='mb-4'>
+            <Input
+              clearable
+              bordered
+              label='Email :'
+              placeholder='Entrez votre adresse email...'
+              type='email'
+              name='email'
+              value={formData.email}
+              onChange={handleChange}
+              className='w-full'
+            />
+          </div>
+          <div className='mb-6'>
+            <Input
+              clearable
+              bordered
+              label='Mot de passe :'
+              placeholder='Entrez un mot de passe...'
+              type='password'
+              name='password'
+              value={formData.password}
+              onChange={handleChange}
+              className='w-full'
+            />
+          </div>
+          <Button type='submit' className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full'>
+            S'enregistrer
+          </Button>
+        </form>
+      </div>
+    </div>
+
   )
 }
 
